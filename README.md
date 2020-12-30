@@ -1,3 +1,40 @@
+# Info for this fork
+
+## Intro
+I use the "Pirate Audio: Line-out for Raspberry Pi" with a Raspberry Pi Zero as an webradio. To use it with MPD, I installed the [Raspberry Pi Internet Radio](https://github.com/bobrathbone/piradio6). 
+
+## Problem
+After some time (~4 hours) the display freezed and I found a segfault in the log-files:
+
+`Fatal Python error: Segmentation fault 
+Thread 0xb4655460 <python> (most recent call first): 
+ File "/usr/lib/python2.7/SocketServer.py", line 150 in _eintr_retry 
+ File "/usr/lib/python2.7/SocketServer.py", line 231 in serve_forever 
+ File "/usr/lib/python2.7/threading.py", line 754 in run 
+ File "/usr/lib/python2.7/threading.py", line 801 in __bootstrap_inner 
+ File "/usr/lib/python2.7/threading.py", line 774 in __bootstrap 
+Current thread 0xb6f4c010 <python> (most recent call first): 
+ File "/usr/local/lib/python2.7/dist-packages/ST7789/__init__.py", line 171 in send 
+ File "/usr/local/lib/python2.7/dist-packages/ST7789/__init__.py", line 192 in data 
+ File "/usr/local/lib/python2.7/dist-packages/ST7789/__init__.py", line 344 in display
+ File "/usr/share/radio/st7789tft_class.py", line 77 in update 
+ File "/usr/share/radio/display_class.py", line 256 in update 
+ File "/usr/share/radio/display_class.py", line 241 in out 
+ File "/usr/share/radio/radiod.py", line 1173 in displayCurrent 
+ File "/usr/share/radio/radiod.py", line 232 in process 
+ File "/usr/share/radio/radiod.py", line 142 in run 
+ File "/usr/share/radio/radio_daemon.py", line 125 in begin 
+ File "/usr/share/radio/radio_daemon.py", line 97 in nodaemon 
+ File "/usr/share/radio/radiod.py", line 1403 in <module> 
+radiod.service: Main process exited, code=killed, status=11/SEGV 
+radiod.service: Failed with result 'signal'. `
+
+## Solution
+I found a similar porblem [here](https://github.com/pimoroni/st7735-python/commit/3009ef94c36373866dca9ccd4313b4d1339be075) 
+and modified the code.
+For me it is working now without any segfault.
+
+
 # Python ST7789
 
 [![Build Status](https://travis-ci.com/pimoroni/st7789-python.svg?branch=master)](https://travis-ci.com/pimoroni/st7789-python)
