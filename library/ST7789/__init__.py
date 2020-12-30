@@ -165,10 +165,8 @@ class ST7789(object):
         # Convert scalar argument to list so either can be passed as parameter.
         if isinstance(data, numbers.Number):
             data = [data & 0xFF]
-        # Write data a chunk at a time.
-        for start in range(0, len(data), chunk_size):
-            end = min(start + chunk_size, len(data))
-            self._spi.xfer(data[start:end])
+        # changed something because of spidev segfault
+        self._spi.xfer3(data)
 
     def set_backlight(self, value):
         """Set the backlight on/off."""
